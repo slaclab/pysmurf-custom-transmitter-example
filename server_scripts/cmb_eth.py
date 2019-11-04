@@ -32,7 +32,7 @@ import rogue.interfaces.stream
 
 import pysmurf.core.devices
 
-from mymodule/transmitters._MyTransmitter import MyTransmitter
+from mymodule.transmitters._MyTransmitter import MyTransmitter
 
 # Print the usage message
 def usage(name):
