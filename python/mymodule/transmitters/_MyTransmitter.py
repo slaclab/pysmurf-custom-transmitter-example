@@ -29,6 +29,15 @@ class MyTransmitter(pyrogue.Device):
         pyrogue.Device.__init__(self, name=name, description='SMuRF Data CustomTransmitter', **kwargs)
         self._transmitter = MyModule.MyTransmitter()
 
+    # Add "Disable" variable
+    self.add(pyrogue.LocalVariable(
+        name='Debug',
+        description='Set the debug mode',
+        mode='RW',
+        value=False,
+        localSet=lambda value: self._transmitter.setDebug(value),
+        localGet=self._transmitter.getDebug))
+
     # Method called by streamConnect, streamTap and streamConnectBiDir to access slave
     def _getStreamSlave(self):
         return self._transmitter
