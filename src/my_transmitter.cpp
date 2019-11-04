@@ -46,5 +46,5 @@ BOOST_PYTHON_MODULE(MyModule)
     printf("Failed to load my processor module. import rogue first\n");
   }
 
-  printf("Loaded my processor module\n");
+  printf("Custom transmitter module loaded\n");
 };
