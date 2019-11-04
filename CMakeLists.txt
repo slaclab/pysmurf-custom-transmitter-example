@@ -24,41 +24,37 @@ project (MyModule)
 enable_language(CXX)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 
-# Boost Configuration
-set(Boost_USE_MULTITHREADED ON)
-
-# Boost may need help on SLAC machines
-set(BOOST_ROOT:PATHNAME $ENV{BOOST_PATH})
-
-# First try standard suffix for boost
-find_package(Boost 1.58 COMPONENTS system thread python3)
-
-# Next try Debian/Ubuntu suffix for boost
-if (NOT Boost_FOUND)
-   find_package(Boost 1.58 REQUIRED COMPONENTS system thread python-py35)
+#####################################
+# Find Rogue & Support Librarie
+#####################################
+# Find Rogue
+if (DEFINED ENV{ROGUE_DIR})
+    set(Rogue_DIR $ENV{ROGUE_DIR}/lib)
+else
+    set(Rogue_DIR ${CMAKE_PREFIX_PATH}/lib)
 endif()
 
-# Find python3
-find_package(PythonInterp 3 REQUIRED)
-find_package(PythonLibs 3 REQUIRED)
+find_package(Rogue)
 
-# Find Rogue
-set(Rogue_DIR $ENV{ROGUE_DIR}/lib)
-find_package(Rogue REQUIRED)
+# Find smurf
+if (DEFINED ENV{SMURF_DIR})
+    set(smurf_DIR $ENV{SMURF_DIR}/lib)
+else
+    set(smurf_DIR ${CMAKE_PREFIX_PATH}/lib)
+endif()
 
-# Find Rogue
-set(smurf_DIR $ENV{SMURF_DIR}/lib)
 find_package(smurf REQUIRED)
 
-include_directories(/usr/local/include/)
-
+#####################################
+# Setup build
+#####################################
+# Include files
 include_directories(${ROGUE_INCLUDE_DIRS})
 include_directories(${SMURF_INCLUDE_DIRS})
-include_directories(${Boost_INCLUDE_DIRS})
-include_directories(${PYTHON_INCLUDE_DIRS})
+include_directories(/usr/local/include/)
 include_directories(${PROJECT_SOURCE_DIR}/include/)
 
-# Create rogue python library
+# Create MyModule python library
 AUX_SOURCE_DIRECTORY(src SRC_FILES)
 add_library(MyModule SHARED ${SRC_FILES})
 
