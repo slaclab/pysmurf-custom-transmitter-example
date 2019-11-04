@@ -8,18 +8,19 @@ namespace sct = smurf::core::transmitters;
 class MyTransmitter : public sct::BaseTransmitter
 {
 public:
-    // Custom class constructor and destrcutor
+    // Custom class constructor and destructor
     MyTransmitter() : sct::BaseTransmitter(), debug(false) {};
     ~MyTransmitter() {};
 
-    // This is the virtal method defined in 'BaseTransmitter' which is call whenever a
+    // This is the virtual method defined in 'BaseTransmitter' which is call whenever a
     // new SMuRF packet is ready.
     void transmit(SmurfPacketROPtr sp)
     {
-	// If the debug flag is enabled, print part of the SMuRF Packet
+        // If the debug flag is enabled, print part of the SMuRF Packet
         if (debug)
         {
-	    std::size_t numCh {sp->getHeader()->getNumberChannels()};
+            std::size_t numCh {sp->getHeader()->getNumberChannels()};
+
             std::cout << "=====================================" << std::endl;
             std::cout << "Packet received" << std::endl;
             std::cout << "=====================================" << std::endl;
@@ -28,8 +29,8 @@ public:
             std::cout << "-----------------------" << std::endl;
             std::cout << " HEADER:" << std::endl;
             std::cout << "-----------------------" << std::endl;
-	    std::cout << "Version            = " << unsigned(sp->getHeader()->getVersion()) << std::endl;
-	    std::cout << "Crate ID           = " << unsigned(sp->getHeader()->getCrateID()) << std::endl;
+            std::cout << "Version            = " << unsigned(sp->getHeader()->getVersion()) << std::endl;
+            std::cout << "Crate ID           = " << unsigned(sp->getHeader()->getCrateID()) << std::endl;
             std::cout << "Slot number        = " << unsigned(sp->getHeader()->getSlotNumber()) << std::endl;
             std::cout << "Number of channels = " << unsigned(numCh) << std::endl;
             std::cout << "Unix time          = " << unsigned(sp->getHeader()->getUnixTime()) << std::endl;
@@ -40,11 +41,11 @@ public:
             std::cout << " DATA (up to the first 20 points):" << std::endl;
             std::cout << "-----------------------" << std::endl;
 
-	    std::size_t n{20};
-	    if (numCh < n)
-		    n = numCh;
+        std::size_t n{20};
+        if (numCh < n)
+            n = numCh;
 
-	    for (std::size_t i(0); i < n; ++i)
+        for (std::size_t i(0); i < n; ++i)
                 std::cout << "Data[" << i << "] = " << sp->getData(i) << std::endl;
 
             std::cout << "-----------------------" << std::endl;
@@ -60,10 +61,10 @@ public:
 
     static void setup_python()
     {
-        bp::class_< MyTransmitter, 
-	            std::shared_ptr<MyTransmitter>, 
-		    bp::bases<ris::Slave>, 
-		    boost::noncopyable >("MyTransmitter",bp::init<>())
+        bp::class_< MyTransmitter,
+                std::shared_ptr<MyTransmitter>,
+            bp::bases<ris::Slave>,
+            boost::noncopyable >("MyTransmitter",bp::init<>())
             .def("setDebug", &MyTransmitter::setDebug)
             .def("getDebug", &MyTransmitter::getDebug)
         ;
@@ -78,16 +79,16 @@ private:
 
 BOOST_PYTHON_MODULE(MyModule)
 {
-  PyEval_InitThreads();
+    PyEval_InitThreads();
 
-  try
-  {
-    MyTransmitter::setup_python();
-  }
-  catch (...)
-  {
-    printf("Failed to load my processor module. import rogue first\n");
-  }
+    try
+    {
+        MyTransmitter::setup_python();
+    }
+    catch (...)
+    {
+        printf("Failed to load my custom transmitter module. Import rogue first\n");
+    }
 
-  printf("Custom transmitter module loaded\n");
+    printf("Custom transmitter module loaded\n");
 };
