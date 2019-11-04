@@ -9,4 +9,5 @@ To write a custom transmitter, which is described in the pysmurf repository [her
   - In your new C++ class you can add new variable and methods (as the `debug` flag, and the `setDebug` and `getDebug` in this example),
   - In you new C++ class you can expose methods to python if you want to expose then in the pysmurf's pysmurf tree (this example expose the `setDebug` and `getDebug` methods),
 - Write a python wrapper for your C++ class (see [MyTransmitter.py](python/mymodule/transmitters/_MyTransmitter.py) as an example),
+- Configure cmake to find Rogue, smurf and all other needed libraries (see [CMakeLists.txt] as an example),
 - Finally, white a startup script where you call the appropriate pysmurf root device, attaching your new module (see [cmb_eth.py](server_scripts/cmb_eth.py) and [dev_board_eth.py](server_scripts/dev_board_eth.py) as examples).
