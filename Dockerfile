@@ -8,3 +8,4 @@ WORKDIR build
 RUN cmake -DCMAKE_BUILD_TYPE=Release .. && make
 WORKDIR ..
 ENV PYTHONPATH /usr/local/src/pysmurf-custom-transmitter-example/lib:${PYTHONPATH}
+ENV PYTHONPATH /usr/local/src/pysmurf-custom-transmitter-example/python:${PYTHONPATH}
