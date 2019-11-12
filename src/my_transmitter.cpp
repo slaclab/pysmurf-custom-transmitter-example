@@ -62,13 +62,12 @@ public:
     static void setup_python()
     {
         bp::class_< MyTransmitter,
-                std::shared_ptr<MyTransmitter>,
-            bp::bases<ris::Slave>,
-            boost::noncopyable >("MyTransmitter",bp::init<>())
+                    std::shared_ptr<MyTransmitter>,
+                    boost::noncopyable >
+                    ("MyTransmitter",bp::init<>())
             .def("setDebug", &MyTransmitter::setDebug)
             .def("getDebug", &MyTransmitter::getDebug)
         ;
-        bp::implicitly_convertible<std::shared_ptr<MyTransmitter>, ris::SlavePtr>();
     };
 
 private:
