@@ -65,8 +65,10 @@ public:
                     std::shared_ptr<MyTransmitter>,
                     boost::noncopyable >
                     ("MyTransmitter",bp::init<>())
-            .def("setDebug", &MyTransmitter::setDebug)
-            .def("getDebug", &MyTransmitter::getDebug)
+            .def("setDebug",       &MyTransmitter::setDebug)
+            .def("getDebug",       &MyTransmitter::getDebug)
+            .def("getDataChannel", &MyTransmitter::getDataChannel)
+            .def("getMetaChannel", &MyTransmitter::getMetaChannel)
         ;
     };
 
