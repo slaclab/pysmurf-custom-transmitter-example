@@ -31,6 +31,30 @@ class MyTransmitter(pyrogue.Device):
 
         # Add "Disable" variable
         self.add(pyrogue.LocalVariable(
+            name='Disable',
+            description='Disable the processing block. Data will just pass thorough to the next slave.',
+            mode='RW',
+            value=False,
+            localSet=lambda value: self._transmitter.setDisable(value),
+            localGet=self._transmitter.getDisable))
+
+        # Add the dropped packet counter variable
+        self.add(pyrogue.LocalVariable(
+            name='PktDropCnt',
+            description='Number of dropped packets',
+            mode='RO',
+            value=0,
+            pollInterval=1,
+            localGet=self._transmitter.getPktDropCnt))
+
+        # Command to clear all the counters
+        self.add(pyrogue.LocalCommand(
+            name='clearCnt',
+            description='Clear all counters',
+            function=self._transmitter.clearCnt))
+
+        # Add "Disable" variable
+        self.add(pyrogue.LocalVariable(
             name='Debug',
             description='Set the debug mode',
             mode='RW',
@@ -38,7 +62,9 @@ class MyTransmitter(pyrogue.Device):
             localSet=lambda value: self._transmitter.setDebug(value),
             localGet=self._transmitter.getDebug))
 
-    # Method called by streamConnect, streamTap and streamConnectBiDir to access slave
-    def _getStreamSlave(self):
-        return self._transmitter
+    def getDataChannel(self):
+        return self._transmitter.getDataChannel()
+
+    def getMetaChannel(self):
+        return self._transmitter.getMetaChannel()
 

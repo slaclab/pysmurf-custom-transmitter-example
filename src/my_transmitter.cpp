@@ -62,13 +62,18 @@ public:
     static void setup_python()
     {
         bp::class_< MyTransmitter,
-                std::shared_ptr<MyTransmitter>,
-            bp::bases<ris::Slave>,
-            boost::noncopyable >("MyTransmitter",bp::init<>())
-            .def("setDebug", &MyTransmitter::setDebug)
-            .def("getDebug", &MyTransmitter::getDebug)
+                    std::shared_ptr<MyTransmitter>,
+                    boost::noncopyable >
+                    ("MyTransmitter",bp::init<>())
+            .def("setDebug",       &MyTransmitter::setDebug)
+            .def("getDebug",       &MyTransmitter::getDebug)
+            .def("setDisable",     &MyTransmitter::setDisable)
+            .def("getDisable",     &MyTransmitter::getDisable)
+            .def("clearCnt",       &MyTransmitter::clearCnt)
+            .def("getPktDropCnt",  &MyTransmitter::getPktDropCnt)
+            .def("getDataChannel", &MyTransmitter::getDataChannel)
+            .def("getMetaChannel", &MyTransmitter::getMetaChannel)
         ;
-        bp::implicitly_convertible<std::shared_ptr<MyTransmitter>, ris::SlavePtr>();
     };
 
 private:
