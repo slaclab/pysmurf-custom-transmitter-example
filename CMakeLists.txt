@@ -29,20 +29,18 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 #####################################
 # Find Rogue
 if (DEFINED ENV{ROGUE_DIR})
-    set(Rogue_DIR $ENV{ROGUE_DIR}/lib)
-else
-    set(Rogue_DIR ${CMAKE_PREFIX_PATH}/lib)
+   set(Rogue_DIR $ENV{ROGUE_DIR}/lib)
+else()
+   set(Rogue_DIR ${CMAKE_PREFIX_PATH}/lib)
 endif()
-
-find_package(Rogue)
+find_package(Rogue REQUIRED)
 
 # Find smurf
 if (DEFINED ENV{SMURF_DIR})
-    set(smurf_DIR $ENV{SMURF_DIR}/lib)
-else
-    set(smurf_DIR ${CMAKE_PREFIX_PATH}/lib)
+   set(smurf_DIR $ENV{SMURF_DIR}/lib)
+else()
+   set(smurf_DIR ${CMAKE_PREFIX_PATH}/lib)
 endif()
-
 find_package(smurf REQUIRED)
 
 #####################################
