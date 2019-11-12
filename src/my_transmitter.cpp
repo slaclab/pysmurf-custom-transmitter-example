@@ -69,6 +69,10 @@ public:
                     ("MyTransmitter",bp::init<>())
             .def("setDebug",       &MyTransmitter::setDebug)
             .def("getDebug",       &MyTransmitter::getDebug)
+            .def("setDisable",     &MyTransmitter::setDisable)
+            .def("getDisable",     &MyTransmitter::getDisable)
+            .def("clearCnt",       &MyTransmitter::clearCnt)
+            .def("getPktDropCnt",  &MyTransmitter::getPktDropCnt)
             .def("getDataChannel", &MyTransmitter::getDataChannel)
             .def("getMetaChannel", &MyTransmitter::getMetaChannel)
         ;
