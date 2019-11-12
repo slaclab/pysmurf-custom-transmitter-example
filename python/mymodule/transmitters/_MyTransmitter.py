@@ -28,7 +28,7 @@ class MyTransmitter(BaseTransmitter):
     SMuRF Data MyTransmitter Python Wrapper.
     """
     def __init__(self, name, **kwargs):
-        BaseTransmitter.__init__(self, name=name, description='SMuRF Data CustomTransmitter', **kwargs)
+        BaseTransmitter.__init__(self, name=name, **kwargs)
         self._transmitter = MyModule.MyTransmitter()
 
         # Add "Disable" variable
