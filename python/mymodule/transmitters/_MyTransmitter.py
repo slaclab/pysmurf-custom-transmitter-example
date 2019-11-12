@@ -40,7 +40,3 @@ class MyTransmitter(BaseTransmitter):
             localSet=lambda value: self._transmitter.setDebug(value),
             localGet=self._transmitter.getDebug))
 
-    # Method called by streamConnect, streamTap and streamConnectBiDir to access slave
-    def _getStreamSlave(self):
-        return self._transmitter
-
