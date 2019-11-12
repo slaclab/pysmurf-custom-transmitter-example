@@ -53,8 +53,6 @@ public:
 
             std::cout << "=====================================" << std::endl;
         }
-
-        sleep(2);
     };
 
     // Set/Get the debug flag
