@@ -21,7 +21,9 @@ import pyrogue
 import smurf
 import MyModule
 
-class MyTransmitter(pyrogue.Device):
+from pysmurf.core.transmitters._BaseTransmitter import BaseTransmitter
+
+class MyTransmitter(BaseTransmitter):
     """
     SMuRF Data MyTransmitter Python Wrapper.
     """
