@@ -21,15 +21,37 @@ import pyrogue
 import smurf
 import MyModule
 
-from pysmurf.core.transmitters._BaseTransmitter import BaseTransmitter
-
-class MyTransmitter(BaseTransmitter):
+class MyTransmitter(pyrogue.Device):
     """
     SMuRF Data MyTransmitter Python Wrapper.
     """
     def __init__(self, name, **kwargs):
-        BaseTransmitter.__init__(self, name=name, **kwargs)
+        pyrogue.Device.__init__(self, name=name, description='SMuRF Data CustomTransmitter', **kwargs)
         self._transmitter = MyModule.MyTransmitter()
+
+        # Add "Disable" variable
+        self.add(pyrogue.LocalVariable(
+            name='Disable',
+            description='Disable the processing block. Data will just pass thorough to the next slave.',
+            mode='RW',
+            value=False,
+            localSet=lambda value: self._transmitter.setDisable(value),
+            localGet=self._transmitter.getDisable))
+
+        # Add the dropped packet counter variable
+        self.add(pyrogue.LocalVariable(
+            name='PktDropCnt',
+            description='Number of dropped packets',
+            mode='RO',
+            value=0,
+            pollInterval=1,
+            localGet=self._transmitter.getPktDropCnt))
+
+        # Command to clear all the counters
+        self.add(pyrogue.LocalCommand(
+            name='clearCnt',
+            description='Clear all counters',
+            function=self._transmitter.clearCnt))
 
         # Add "Disable" variable
         self.add(pyrogue.LocalVariable(
@@ -39,4 +61,10 @@ class MyTransmitter(BaseTransmitter):
             value=False,
             localSet=lambda value: self._transmitter.setDebug(value),
             localGet=self._transmitter.getDebug))
+
+    def getDataChannel(self):
+        return self._transmitter.getDataChannel()
+
+    def getMetaChannel(self):
+        return self._transmitter.getMetaChannel()
 
