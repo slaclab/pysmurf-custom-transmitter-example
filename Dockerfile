@@ -9,3 +9,4 @@ RUN cmake -DCMAKE_BUILD_TYPE=Release .. && make
 WORKDIR ..
 ENV PYTHONPATH /usr/local/src/pysmurf-custom-transmitter-example/lib:${PYTHONPATH}
 ENV PYTHONPATH /usr/local/src/pysmurf-custom-transmitter-example/python:${PYTHONPATH}
+ENV PYTHONPATH /usr/local/src/pysmurf/server_scripts:${PYTHONPATH}
