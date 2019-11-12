@@ -1,7 +1,7 @@
 FROM tidair/pysmurf-server-base:v4.0.0-rc5
 
 WORKDIR /usr/local/src
-RUN git clone https://github.com/slaclab/pysmurf-custom-transmitter-example.git -b v4.0.0-rc5_update
+RUN git clone https://github.com/slaclab/pysmurf-custom-transmitter-example.git
 WORKDIR pysmurf-custom-transmitter-example
 RUN mkdir build
 WORKDIR build
