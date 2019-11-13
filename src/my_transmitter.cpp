@@ -35,6 +35,11 @@ public:
             std::cout << "Number of channels = " << unsigned(numCh) << std::endl;
             std::cout << "Unix time          = " << unsigned(sp->getHeader()->getUnixTime()) << std::endl;
             std::cout << "Frame counter      = " << unsigned(sp->getHeader()->getFrameCounter()) << std::endl;
+            std::cout << "TES Bias values:" << std::endl
+            for (std::size_t i{0}; i < 16; ++i)
+                std::cout << sp->getHeader()->getTESBias(i) << ", ";
+            std::cout << std::endl;
+
             std::cout << std::endl;
 
             std::cout << "-----------------------" << std::endl;
