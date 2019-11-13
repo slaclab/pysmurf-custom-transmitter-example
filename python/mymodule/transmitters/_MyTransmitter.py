@@ -38,29 +38,47 @@ class MyTransmitter(pyrogue.Device):
             localSet=lambda value: self._transmitter.setDisable(value),
             localGet=self._transmitter.getDisable))
 
-        # Add the dropped packet counter variable
+        # Add a variable for the debugData flag
         self.add(pyrogue.LocalVariable(
-            name='PktDropCnt',
-            description='Number of dropped packets',
+            name='DebugData',
+            description='Set the debug mode, for the data',
+            mode='RW',
+            value=False,
+            localSet=lambda value: self._transmitter.setDebugData(value),
+            localGet=self._transmitter.getDebugData))
+
+        # Add a variable for the debugMeta flag
+        self.add(pyrogue.LocalVariable(
+            name='DebugMeta',
+            description='Set the debug mode, for the metadata',
+            mode='RW',
+            value=False,
+            localSet=lambda value: self._transmitter.setDebugMeta(value),
+            localGet=self._transmitter.getDebugMeta))
+
+        # Add the data dropped counter variable
+        self.add(pyrogue.LocalVariable(
+            name='DataDropCnt',
+            description='Number of data frame dropped',
             mode='RO',
             value=0,
             pollInterval=1,
-            localGet=self._transmitter.getPktDropCnt))
+            localGet=self._transmitter.getDataDropCnt))
+
+        # Add the metadata dropped counter variable
+        self.add(pyrogue.LocalVariable(
+            name='MetaDropCnt',
+            description='Number of metadata frame dropped',
+            mode='RO',
+            value=0,
+            pollInterval=1,
+            localGet=self._transmitter.getMetaDropCnt))
 
         # Command to clear all the counters
         self.add(pyrogue.LocalCommand(
             name='clearCnt',
             description='Clear all counters',
             function=self._transmitter.clearCnt))
-
-        # Add "Disable" variable
-        self.add(pyrogue.LocalVariable(
-            name='Debug',
-            description='Set the debug mode',
-            mode='RW',
-            value=False,
-            localSet=lambda value: self._transmitter.setDebug(value),
-            localGet=self._transmitter.getDebug))
 
     def getDataChannel(self):
         return self._transmitter.getDataChannel()

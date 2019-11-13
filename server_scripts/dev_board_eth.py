@@ -18,16 +18,12 @@
 #-----------------------------------------------------------------------------
 
 import sys
-import os
-import re
 
 import pyrogue
-import pyrogue.utilities.fileio
-import rogue.interfaces.stream
 
 import pysmurf.core.devices
 
-import common
+import pysmurf.core.server_scripts.Common as common
 
 from mymodule.transmitters._MyTransmitter import MyTransmitter
 
@@ -61,6 +57,11 @@ if __name__ == "__main__":
                            disable_bay0   = args['disable_bay0'],
                            disable_bay1   = args['disable_bay1'],
                            txDevice       = MyTransmitter(name="CustomTransmitter")) as root:
+
+            # The dev board doesn't support TES bias values, so let's set dummy
+            # values ([-8:7]), for testing purposes.
+            for i in range(16):
+                root._smurf_processor.setTesBias(index=i, val=(i-8))
 
             if args['use_gui']:
                 # Start the GUI

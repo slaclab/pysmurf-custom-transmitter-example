@@ -9,15 +9,15 @@ class MyTransmitter : public sct::BaseTransmitter
 {
 public:
     // Custom class constructor and destructor
-    MyTransmitter() : sct::BaseTransmitter(), debug(false) {};
+    MyTransmitter() : sct::BaseTransmitter(), debugData(false), debugMeta(false) {};
     ~MyTransmitter() {};
 
     // This is the virtual method defined in 'BaseTransmitter' which is call whenever a
     // new SMuRF packet is ready.
-    void transmit(SmurfPacketROPtr sp)
+    void dataTransmit(SmurfPacketROPtr sp)
     {
         // If the debug flag is enabled, print part of the SMuRF Packet
-        if (debug)
+        if (debugData)
         {
             std::size_t numCh {sp->getHeader()->getNumberChannels()};
 
@@ -35,6 +35,11 @@ public:
             std::cout << "Number of channels = " << unsigned(numCh) << std::endl;
             std::cout << "Unix time          = " << unsigned(sp->getHeader()->getUnixTime()) << std::endl;
             std::cout << "Frame counter      = " << unsigned(sp->getHeader()->getFrameCounter()) << std::endl;
+            std::cout << "TES Bias values:" << std::endl;
+            for (std::size_t i{0}; i < 16; ++i)
+                std::cout << sp->getHeader()->getTESBias(i) << ", ";
+            std::cout << std::endl;
+
             std::cout << std::endl;
 
             std::cout << "-----------------------" << std::endl;
@@ -55,9 +60,26 @@ public:
         }
     };
 
-    // Set/Get the debug flag
-    void       setDebug(bool d) { debug = d;    };
-    const bool getDebug()       { return debug; };
+    // This is the virtual method defined in 'BaseTransmitter' which is call whenever
+    // new metadata is ready.
+    void metaTransmit(std::string cfg)
+    {
+        // If the debug flag is enabled, print the metadata
+        if (debugMeta)
+        {
+            std::cout << "=====================================" << std::endl;
+            std::cout << "Metadata received" << std::endl;
+            std::cout << "=====================================" << std::endl;
+            std::cout << cfg << std::endl;
+            std::cout << "=====================================" << std::endl;
+        }
+    }
+
+    // Set/Get the debug flags
+    void       setDebugData(bool d) { debugData = d;    };
+    void       setDebugMeta(bool d) { debugMeta = d;    };
+    const bool getDebugData()       { return debugData; };
+    const bool getDebugMeta()       { return debugMeta; };
 
     static void setup_python()
     {
@@ -65,19 +87,23 @@ public:
                     std::shared_ptr<MyTransmitter>,
                     boost::noncopyable >
                     ("MyTransmitter",bp::init<>())
-            .def("setDebug",       &MyTransmitter::setDebug)
-            .def("getDebug",       &MyTransmitter::getDebug)
             .def("setDisable",     &MyTransmitter::setDisable)
             .def("getDisable",     &MyTransmitter::getDisable)
+            .def("setDebugData",   &MyTransmitter::setDebugData)
+            .def("getDebugData",   &MyTransmitter::getDebugData)
+            .def("setDebugMeta",   &MyTransmitter::setDebugMeta)
+            .def("getDebugMeta",   &MyTransmitter::getDebugMeta)
             .def("clearCnt",       &MyTransmitter::clearCnt)
-            .def("getPktDropCnt",  &MyTransmitter::getPktDropCnt)
+            .def("getDataDropCnt", &MyTransmitter::getDataDropCnt)
+            .def("getMetaDropCnt", &MyTransmitter::getMetaDropCnt)
             .def("getDataChannel", &MyTransmitter::getDataChannel)
             .def("getMetaChannel", &MyTransmitter::getMetaChannel)
         ;
     };
 
 private:
-    bool debug = false; // Debug flag
+    bool debugData; // Debug flag, for data
+    bool debugMeta; // Debug flag, for metadata
 
 };
 
