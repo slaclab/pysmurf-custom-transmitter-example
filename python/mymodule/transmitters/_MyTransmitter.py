@@ -38,21 +38,6 @@ class MyTransmitter(pyrogue.Device):
             localSet=lambda value: self._transmitter.setDisable(value),
             localGet=self._transmitter.getDisable))
 
-        # Add the dropped packet counter variable
-        self.add(pyrogue.LocalVariable(
-            name='PktDropCnt',
-            description='Number of dropped packets',
-            mode='RO',
-            value=0,
-            pollInterval=1,
-            localGet=self._transmitter.getPktDropCnt))
-
-        # Command to clear all the counters
-        self.add(pyrogue.LocalCommand(
-            name='clearCnt',
-            description='Clear all counters',
-            function=self._transmitter.clearCnt))
-
         # Add a variable for the debugData flag
         self.add(pyrogue.LocalVariable(
             name='DebugData',
@@ -70,6 +55,21 @@ class MyTransmitter(pyrogue.Device):
             value=False,
             localSet=lambda value: self._transmitter.setDebugMeta(value),
             localGet=self._transmitter.getDebugMeta))
+
+        # Add the dropped packet counter variable
+        self.add(pyrogue.LocalVariable(
+            name='PktDropCnt',
+            description='Number of dropped packets',
+            mode='RO',
+            value=0,
+            pollInterval=1,
+            localGet=self._transmitter.getPktDropCnt))
+
+        # Command to clear all the counters
+        self.add(pyrogue.LocalCommand(
+            name='clearCnt',
+            description='Clear all counters',
+            function=self._transmitter.clearCnt))
 
     def getDataChannel(self):
         return self._transmitter.getDataChannel()
