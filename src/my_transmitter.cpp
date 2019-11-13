@@ -88,7 +88,7 @@ public:
     };
 
 private:
-    bool debugData = false; // Debug flag
+    bool debugData; // Debug flag, for data
 
 };
 
