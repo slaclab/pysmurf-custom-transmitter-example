@@ -53,14 +53,23 @@ class MyTransmitter(pyrogue.Device):
             description='Clear all counters',
             function=self._transmitter.clearCnt))
 
-        # Add "Disable" variable
+        # Add a variable for the debugData flag
         self.add(pyrogue.LocalVariable(
-            name='Debug',
-            description='Set the debug mode',
+            name='DebugData',
+            description='Set the debug mode, for the data',
             mode='RW',
             value=False,
-            localSet=lambda value: self._transmitter.setDebug(value),
-            localGet=self._transmitter.getDebug))
+            localSet=lambda value: self._transmitter.setDebugData(value),
+            localGet=self._transmitter.getDebugData))
+
+        # Add a variable for the debugMeta flag
+        self.add(pyrogue.LocalVariable(
+            name='DebugMeta',
+            description='Set the debug mode, for the metadata',
+            mode='RW',
+            value=False,
+            localSet=lambda value: self._transmitter.setDebugMeta(value),
+            localGet=self._transmitter.getDebugMeta))
 
     def getDataChannel(self):
         return self._transmitter.getDataChannel()
