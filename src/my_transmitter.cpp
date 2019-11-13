@@ -14,7 +14,7 @@ public:
 
     // This is the virtual method defined in 'BaseTransmitter' which is call whenever a
     // new SMuRF packet is ready.
-    void transmit(SmurfPacketROPtr sp)
+    void dataTransmit(SmurfPacketROPtr sp)
     {
         // If the debug flag is enabled, print part of the SMuRF Packet
         if (debug)
