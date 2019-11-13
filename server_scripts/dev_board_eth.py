@@ -18,16 +18,12 @@
 #-----------------------------------------------------------------------------
 
 import sys
-import os
-import re
 
 import pyrogue
-import pyrogue.utilities.fileio
-import rogue.interfaces.stream
 
 import pysmurf.core.devices
 
-import common
+import pysmurf.core.server_scripts.Common as common
 
 from mymodule.transmitters._MyTransmitter import MyTransmitter
 
