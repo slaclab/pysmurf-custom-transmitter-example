@@ -9,7 +9,7 @@ class MyTransmitter : public sct::BaseTransmitter
 {
 public:
     // Custom class constructor and destructor
-    MyTransmitter() : sct::BaseTransmitter(), debug(false) {};
+    MyTransmitter() : sct::BaseTransmitter(), debugData(false) {};
     ~MyTransmitter() {};
 
     // This is the virtual method defined in 'BaseTransmitter' which is call whenever a
@@ -17,7 +17,7 @@ public:
     void dataTransmit(SmurfPacketROPtr sp)
     {
         // If the debug flag is enabled, print part of the SMuRF Packet
-        if (debug)
+        if (debugData)
         {
             std::size_t numCh {sp->getHeader()->getNumberChannels()};
 
@@ -67,8 +67,8 @@ public:
     }
 
     // Set/Get the debug flag
-    void       setDebug(bool d) { debug = d;    };
-    const bool getDebug()       { return debug; };
+    void       setDebugData(bool d) { debugData = d;    };
+    const bool getDebugData()       { return debugData; };
 
     static void setup_python()
     {
@@ -76,8 +76,8 @@ public:
                     std::shared_ptr<MyTransmitter>,
                     boost::noncopyable >
                     ("MyTransmitter",bp::init<>())
-            .def("setDebug",       &MyTransmitter::setDebug)
-            .def("getDebug",       &MyTransmitter::getDebug)
+            .def("setDebugData",   &MyTransmitter::setDebugData)
+            .def("getDebugData",   &MyTransmitter::getDebugData)
             .def("setDisable",     &MyTransmitter::setDisable)
             .def("getDisable",     &MyTransmitter::getDisable)
             .def("clearCnt",       &MyTransmitter::clearCnt)
@@ -88,7 +88,7 @@ public:
     };
 
 private:
-    bool debug = false; // Debug flag
+    bool debugData = false; // Debug flag
 
 };
 
