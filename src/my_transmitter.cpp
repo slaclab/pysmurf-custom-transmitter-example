@@ -55,6 +55,17 @@ public:
         }
     };
 
+    // This is the virtual method defined in 'BaseTransmitter' which is call whenever
+    // new metadata is ready.
+    void metaTransmit(std::string cfg)
+    {
+        std::cout << "=====================================" << std::endl;
+        std::cout << "Metadata received" << std::endl;
+        std::cout << "=====================================" << std::endl;
+        std::cout << cfg << std::endl;
+        std::cout << "=====================================" << std::endl;
+    }
+
     // Set/Get the debug flag
     void       setDebug(bool d) { debug = d;    };
     const bool getDebug()       { return debug; };
