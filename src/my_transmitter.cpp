@@ -9,7 +9,7 @@ class MyTransmitter : public sct::BaseTransmitter
 {
 public:
     // Custom class constructor and destructor
-    MyTransmitter() : sct::BaseTransmitter(), debugData(false) {};
+    MyTransmitter() : sct::BaseTransmitter(), debugData(false), debugMeta(false) {};
     ~MyTransmitter() {};
 
     // This is the virtual method defined in 'BaseTransmitter' which is call whenever a
@@ -59,16 +59,22 @@ public:
     // new metadata is ready.
     void metaTransmit(std::string cfg)
     {
-        std::cout << "=====================================" << std::endl;
-        std::cout << "Metadata received" << std::endl;
-        std::cout << "=====================================" << std::endl;
-        std::cout << cfg << std::endl;
-        std::cout << "=====================================" << std::endl;
+        // If the debug flag is enabled, print the metadata
+        if (debugMeta)
+        {
+            std::cout << "=====================================" << std::endl;
+            std::cout << "Metadata received" << std::endl;
+            std::cout << "=====================================" << std::endl;
+            std::cout << cfg << std::endl;
+            std::cout << "=====================================" << std::endl;
+        }
     }
 
-    // Set/Get the debug flag
+    // Set/Get the debug flags
     void       setDebugData(bool d) { debugData = d;    };
+    void       setDebugMeta(bool d) { debugMeta = d;    };
     const bool getDebugData()       { return debugData; };
+    const bool getDebugMeta()       { return debugMeta; };
 
     static void setup_python()
     {
@@ -78,6 +84,8 @@ public:
                     ("MyTransmitter",bp::init<>())
             .def("setDebugData",   &MyTransmitter::setDebugData)
             .def("getDebugData",   &MyTransmitter::getDebugData)
+            .def("setDebugMeta",   &MyTransmitter::setDebugMeta)
+            .def("getDebugMeta",   &MyTransmitter::getDebugMeta)
             .def("setDisable",     &MyTransmitter::setDisable)
             .def("getDisable",     &MyTransmitter::getDisable)
             .def("clearCnt",       &MyTransmitter::clearCnt)
@@ -89,6 +97,7 @@ public:
 
 private:
     bool debugData; // Debug flag, for data
+    bool debugMeta; // Debug flag, for metadata
 
 };
 
