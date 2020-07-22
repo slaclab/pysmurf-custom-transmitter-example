@@ -2,7 +2,7 @@
 #-----------------------------------------------------------------------------
 # Title      : PyRogue Server
 #-----------------------------------------------------------------------------
-# File       : dev_board_eth.py
+# File       : dev_board_pcie.py
 # Created    : 2017-06-20
 #-----------------------------------------------------------------------------
 # Description:
@@ -34,28 +34,27 @@ if __name__ == "__main__":
     args = common.get_args()
 
     # Import the root device after the python path is updated
-    from pysmurf.core.roots.DevBoardEth import DevBoardEth as DevBoardEth
+    from pysmurf.core.roots.DevBoardPcie import DevBoardPcie as DevBoardPcie
 
-    if not args['ip_addr']:
-        sys.exit("ERROR: Must specify an IP address for ethernet base communication devices.")
-
-    common.verify_ip(args)
-    common.ping_fpga(args)
+    if args['ip_addr']:
+        common.verify_ip(args)
 
     # The PCIeCard object will take care of setting up the PCIe card (if present)
     with pysmurf.core.devices.PcieCard( lane      = args['pcie_rssi_lane'],
-                                        comm_type = "eth-rssi-interleaved",
+                                        comm_type = "pcie-rssi-interleaved",
                                         ip_addr   = args['ip_addr'],
                                         dev_rssi  = args['pcie_dev_rssi'],
                                         dev_data  = args['pcie_dev_data']):
 
-        with DevBoardEth(  ip_addr        = args['ip_addr'],
-                           config_file    = args['config_file'],
+        with DevBoardPcie( config_file    = args['config_file'],
                            epics_prefix   = args['epics_prefix'],
                            polling_en     = args['polling_en'],
+                           pcie_rssi_lane = args['pcie_rssi_lane'],
                            pv_dump_file   = args['pv_dump_file'],
                            disable_bay0   = args['disable_bay0'],
                            disable_bay1   = args['disable_bay1'],
+                           pcie_dev_rssi  = args['pcie_dev_rssi'],
+                           pcie_dev_data  = args['pcie_dev_data'],
                            configure      = args['configure'],
                            server_port    = args['server_port'],
                            txDevice       = MyTransmitter(name="CustomTransmitter")) as root:
