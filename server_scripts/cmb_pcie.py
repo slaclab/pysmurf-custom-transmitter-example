@@ -2,11 +2,11 @@
 #-----------------------------------------------------------------------------
 # Title      : PyRogue Server startup script
 #-----------------------------------------------------------------------------
-# File       : cmb_eth.py
+# File       : cmb_pcie.py
 # Created    : 2017-06-20
 #-----------------------------------------------------------------------------
 # Description:
-# Python script to start a PyRogue server using ETH communication
+# Python script to start a PyRogue server using PCIe communication
 #-----------------------------------------------------------------------------
 # This file is part of the pysmurf software platform. It is subject to
 # the license terms in the LICENSE.txt file found in the top-level directory
@@ -34,13 +34,10 @@ if __name__ == "__main__":
     args = common.get_args()
 
     # Import the root device after the python path is updated
-    from pysmurf.core.roots.CmbEth import CmbEth
+    from pysmurf.core.roots.CmbPcie import CmbPcie
 
-    if not args['ip_addr']:
-        sys.exit("ERROR: Must specify an IP address for ethernet base communication devices.")
-
-    common.verify_ip(args)
-    common.ping_fpga(args)
+    if args['ip_addr']:
+        common.verify_ip(args)
 
     # Define variable groups (we use the provided example definition)
     # We can disable it by defining "VariableGroups = None" instead.
@@ -48,23 +45,25 @@ if __name__ == "__main__":
 
     # The PCIeCard object will take care of setting up the PCIe card (if present)
     with pysmurf.core.devices.PcieCard( lane      = args['pcie_rssi_lane'],
-                                        comm_type = "eth-rssi-interleaved",
+                                        comm_type = "pcie-rssi-interleaved",
                                         ip_addr   = args['ip_addr'],
                                         dev_rssi  = args['pcie_dev_rssi'],
                                         dev_data  = args['pcie_dev_data']):
 
-        with CmbEth( ip_addr        = args['ip_addr'],
-                     config_file    = args['config_file'],
-                     epics_prefix   = args['epics_prefix'],
-                     polling_en     = args['polling_en'],
-                     pv_dump_file   = args['pv_dump_file'],
-                     disable_bay0   = args['disable_bay0'],
-                     disable_bay1   = args['disable_bay1'],
-                     enable_pwri2c  = args['enable_em22xx'],
-                     configure      = args['configure'],
-                     server_port    = args['server_port'],
-                     VariableGroups = VariableGroups,
-                     txDevice       = MyTransmitter(name="CustomTransmitter")) as root:
+        with CmbPcie( config_file    = args['config_file'],
+                      epics_prefix   = args['epics_prefix'],
+                      polling_en     = args['polling_en'],
+                      pv_dump_file   = args['pv_dump_file'],
+                      disable_bay0   = args['disable_bay0'],
+                      disable_bay1   = args['disable_bay1'],
+                      enable_pwri2c  = args['enable_em22xx'],
+                      pcie_rssi_lane = args['pcie_rssi_lane'],
+                      pcie_dev_rssi  = args['pcie_dev_rssi'],
+                      pcie_dev_data  = args['pcie_dev_data'],
+                      configure      = args['configure'],
+                      server_port    = args['server_port'],
+                      VariableGroups = VariableGroups,
+                      txDevice       = MyTransmitter(name="CustomTransmitter")) as root:
 
             if args['use_gui']:
                 # Start the GUI
