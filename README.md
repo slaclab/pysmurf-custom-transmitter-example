@@ -14,8 +14,11 @@ To write a custom transmitter, which is described in the pysmurf repository [her
   - In you new C++ class you can expose methods to python if you want to expose then in the pysmurf's pysmurf tree (this example expose the `setDebug` and `getDebug` methods),
 - Write a python wrapper for your C++ class (see [MyTransmitter.py](python/mymodule/transmitters/_MyTransmitter.py) as an example),
 - Configure cmake to find Rogue, smurf and all other needed libraries (see [CMakeLists.txt](CMakeLists.txt) as an example),
-- Finally, white a startup script where you call the appropriate pysmurf root device, attaching your new module (see [cmb_eth.py](server_scripts/cmb_eth.py) and [dev_board_eth.py](server_scripts/dev_board_eth.py) as examples).
+- Write a startup script where you call the appropriate pysmurf root device, attaching your new module (see [cmb_eth.py](server_scripts/cmb_eth.py) and [dev_board_eth.py](server_scripts/dev_board_eth.py) as examples, which use the [Common.py](https://github.com/slaclab/pysmurf/blob/main/python/pysmurf/core/server_scripts/Common.py) common scripts provided by pysmurf).
+- Finally, write a launcher script to start you server application (see [start_example_server.sh](scripts/start_example_server.sh) as an example, which uses the common functions from [server_common.sh](https://github.com/slaclab/pysmurf/blob/main/docker/server/scripts/server_common.sh) provided by pysmurf).
 
 ## Docker image
 
-This example provides a [Dockerfile](Dockerfile) as well as a [script](build_docker.sh) to build a docker image with this code. Once you have built your image, you can start the container, and call one of the [server startup scripts](server_scripts). For more information about how to run pysmurf in docker container take a look [here](https://github.com/slaclab/pysmurf/blob/pre-release/README.Docker.md).
+This example provides a [Dockerfile](Dockerfile) as well as a [script](build_docker.sh) to build a docker image with this code. An docker image is also automatically build and push to this [Dockerhub repository](https://hub.docker.com/r/tidair//pysmurf-custom-transmitter-example) for every tagged released of this repository, using GitHub Actions. The `Dockerfile` defines as its `entrypoint` the example [startup script](scripts/start_example_server.sh).
+
+For more information about how to run pysmurf in docker container take a look [here](https://github.com/slaclab/pysmurf/blob/pre-release/README.Docker.md).
