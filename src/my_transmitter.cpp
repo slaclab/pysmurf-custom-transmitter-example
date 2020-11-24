@@ -34,6 +34,10 @@ public:
             std::cout << "Slot number        = " << unsigned(sp->getHeader()->getSlotNumber()) << std::endl;
             std::cout << "Number of channels = " << unsigned(numCh) << std::endl;
             std::cout << "Unix time          = " << unsigned(sp->getHeader()->getUnixTime()) << std::endl;
+            std::cout << "Counter 0          = " << unsigned(sp->getHeader()->getCounter0()) << std::endl;
+            std::cout << "Counter 1          = " << unsigned(sp->getHeader()->getCounter1()) << std::endl;
+            std::cout << "Counter 2          = " << unsigned(sp->getHeader()->getCounter2()) << std::endl;
+            std::cout << "External time clk  = " << unsigned(sp->getHeader()->getExternalTimeClock()) << std::endl;
             std::cout << "Frame counter      = " << unsigned(sp->getHeader()->getFrameCounter()) << std::endl;
             std::cout << "TES Bias values:" << std::endl;
             for (std::size_t i{0}; i < 16; ++i)
