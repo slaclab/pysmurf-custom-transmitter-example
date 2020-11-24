@@ -1,4 +1,4 @@
-FROM tidair/pysmurf-server-base:v4.0.0
+FROM tidair/pysmurf-server-base:v4.1.0
 
 WORKDIR /usr/local/src
 RUN git clone https://github.com/slaclab/pysmurf-custom-transmitter-example.git
