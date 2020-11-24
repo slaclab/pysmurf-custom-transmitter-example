@@ -10,3 +10,6 @@ WORKDIR ..
 ENV PYTHONPATH /usr/local/src/pysmurf-custom-transmitter-example/lib:${PYTHONPATH}
 ENV PYTHONPATH /usr/local/src/pysmurf-custom-transmitter-example/python:${PYTHONPATH}
 ENV PYTHONPATH /usr/local/src/pysmurf/server_scripts:${PYTHONPATH}
+ENV PATH /usr/local/src/pysmurf-custom-transmitter-example/scripts:${PATH}
+
+ENTRYPOINT ["start_example_server.sh"]
