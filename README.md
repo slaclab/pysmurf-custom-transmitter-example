@@ -19,6 +19,6 @@ To write a custom transmitter, which is described in the pysmurf repository [her
 
 ## Docker image
 
-This example provides a [Dockerfile](Dockerfile) as well as a [script](build_docker.sh) to build a docker image with this code. An docker image is also automatically build and push to this [Dockerhub repository](https://hub.docker.com/r/tidair//pysmurf-custom-transmitter-example) for every tagged released of this repository, using GitHub Actions. The `Dockerfile` defines as its `entrypoint` the example [startup script](scripts/start_example_server.sh).
+This example provides a [Dockerfile](Dockerfile) as well as a [script](build_docker.sh) to build a docker image with this code. An docker image is also automatically build and push to this [Dockerhub repository](https://hub.docker.com/r/tidair/pysmurf-custom-transmitter-example) for every tagged released of this repository, using GitHub Actions. The `Dockerfile` defines as its `entrypoint` the example [startup script](scripts/start_example_server.sh).
 
 For more information about how to run pysmurf in docker container take a look [here](https://github.com/slaclab/pysmurf/blob/pre-release/README.Docker.md).
