@@ -1,3 +1,5 @@
+[![CD](https://github.com/slaclab/pysmurf-custom-transmitter-example/workflows/CD/badge.svg)](https://github.com/slaclab/pysmurf-custom-transmitter-example/actions?query=workflow%3ACD)
+
 # Custom pysmurf data transmitter example
 
 Example of how to write an example custom data transmitter class for [pysmurf](https://github.com/slaclab/pysmurf), and how to use it.
