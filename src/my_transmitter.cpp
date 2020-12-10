@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include "smurf/core/transmitters/BaseTransmitter.h"
 
 namespace bp = boost::python;
@@ -40,7 +41,10 @@ public:
             std::cout << "Counter 0              = " << unsigned(sp->getHeader()->getCounter0())            << std::endl;
             std::cout << "Counter 1              = " << unsigned(sp->getHeader()->getCounter1())            << std::endl;
             std::cout << "Counter 2              = " << unsigned(sp->getHeader()->getCounter2())            << std::endl;
-            std::cout << "Average reset bits     = " << unsigned(sp->getHeader()->getAveragingResetBits())  << std::endl;
+            std::cout << "Average reset bits     = 0x" \
+                                                     << std::hex << std::setfill('0') << std::setw(4) \
+                                                     << unsigned(sp->getHeader()->getAveragingResetBits()) \
+                                                     << std::dec                                            << std::endl;
             std::cout << "Frame counter          = " << unsigned(sp->getHeader()->getFrameCounter())        << std::endl;
             std::cout << "TES relay settings     = " << unsigned(sp->getHeader()->getTESRelaySetting())     << std::endl;
             std::cout << "External time clock    = " << unsigned(sp->getHeader()->getExternalTimeClock())   << std::endl;
