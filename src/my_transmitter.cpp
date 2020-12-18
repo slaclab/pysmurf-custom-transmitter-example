@@ -35,7 +35,7 @@ public:
             std::cout << "Slot number            = " << unsigned(sp->getHeader()->getSlotNumber())          << std::endl;
             std::cout << "Timing configuration   = " << unsigned(sp->getHeader()->getTimingConfiguration()) << std::endl;
             std::cout << "Number of channels     = " << unsigned(sp->getHeader()->getNumberChannels())      << std::endl;
-            std::cout << "Unix time              = " << unsigned(sp->getHeader()->getUnixTime())            << std::endl;
+            std::cout << "Unix time              = " << sp->getHeader()->getUnixTime()                      << std::endl;
             std::cout << "Flux ramp increment    = " << unsigned(sp->getHeader()->getFluxRampIncrement())   << std::endl;
             std::cout << "Flux ramp offset       = " << unsigned(sp->getHeader()->getFluxRampOffset())      << std::endl;
             std::cout << "Counter 0              = " << unsigned(sp->getHeader()->getCounter0())            << std::endl;
