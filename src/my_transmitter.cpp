@@ -20,7 +20,8 @@ public:
         // If the debug flag is enabled, print part of the SMuRF Packet
         if (debugData)
         {
-            std::size_t numCh {sp->getHeader()->getNumberChannels()};
+            std::size_t numCh      { sp->getHeader()->getNumberChannels() };
+            uint64_t    epics_time { sp->getHeader()->getCounter2()       };
 
             std::cout << "=====================================" << std::endl;
             std::cout << "Packet received" << std::endl;
@@ -40,14 +41,18 @@ public:
             std::cout << "Flux ramp offset       = " << unsigned(sp->getHeader()->getFluxRampOffset())      << std::endl;
             std::cout << "Counter 0              = " << unsigned(sp->getHeader()->getCounter0())            << std::endl;
             std::cout << "Counter 1              = " << unsigned(sp->getHeader()->getCounter1())            << std::endl;
-            std::cout << "Counter 2              = " << unsigned(sp->getHeader()->getCounter2())            << std::endl;
+            std::cout << "Counter 2 (EPICS time) = 0x" \
+                                                     << std::hex << std::setfill('0') << std::setw(8) \
+                                                     << epics_time \
+                                                     << std::dec                                            << std::endl;
+            std::cout << "    (to UNIX time)     = " << epicsTime2UnixTime(epics_time)                      << std::endl;
             std::cout << "Average reset bits     = 0x" \
                                                      << std::hex << std::setfill('0') << std::setw(4) \
                                                      << unsigned(sp->getHeader()->getAveragingResetBits()) \
                                                      << std::dec                                            << std::endl;
             std::cout << "Frame counter          = " << unsigned(sp->getHeader()->getFrameCounter())        << std::endl;
             std::cout << "TES relay settings     = " << unsigned(sp->getHeader()->getTESRelaySetting())     << std::endl;
-            std::cout << "External time clock    = " << unsigned(sp->getHeader()->getExternalTimeClock())   << std::endl;
+            std::cout << "External time clock    = " << sp->getHeader()->getExternalTimeClock()             << std::endl;
             std::cout << "Control field          = " << unsigned(sp->getHeader()->getControlField())        << std::endl;
             std::cout << "Test parameters        = " << unsigned(sp->getHeader()->getTestParameters())      << std::endl;
             std::cout << "Number of rows         = " << unsigned(sp->getHeader()->getNumberRows())          << std::endl;
@@ -124,6 +129,23 @@ private:
     bool debugData; // Debug flag, for data
     bool debugMeta; // Debug flag, for metadata
 
+    // Convert the EPICS time to UNIX time
+    uint64_t epicsTime2UnixTime(const uint64_t& epics_time)
+    {
+        // The EPICS time word contains 'seconds' in the higher 32-bit word, and 'nanoseconds' in the lower 32-bit word
+        union
+        {
+            uint64_t u64;
+            struct
+            {
+                uint32_t ns;
+                uint32_t s;
+            };
+        } et { .u64 = epics_time };
+        // Convert the EPICS time to nanoseconds, and adjust it to UNIX time.
+        // The EPICS epoch is 00:00:00 Jan 1, 1990 UTC, which correspond to 631152000 seconds in UNIX epoch time.
+        return( (static_cast<uint64_t>(et.s) + 631152000ul)*1000000000ul + static_cast<uint64_t>(et.ns) );
+    };
 };
 
 
