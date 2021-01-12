@@ -40,14 +40,14 @@ public:
             std::cout << "Flux ramp offset       = " << unsigned(sp->getHeader()->getFluxRampOffset())      << std::endl;
             std::cout << "Counter 0              = " << unsigned(sp->getHeader()->getCounter0())            << std::endl;
             std::cout << "Counter 1              = " << unsigned(sp->getHeader()->getCounter1())            << std::endl;
-            std::cout << "Counter 2              = " << unsigned(sp->getHeader()->getCounter2())            << std::endl;
+            std::cout << "Counter 2              = " << sp->getHeader()->getCounter2()                      << std::endl;
             std::cout << "Average reset bits     = 0x" \
                                                      << std::hex << std::setfill('0') << std::setw(4) \
                                                      << unsigned(sp->getHeader()->getAveragingResetBits()) \
                                                      << std::dec                                            << std::endl;
             std::cout << "Frame counter          = " << unsigned(sp->getHeader()->getFrameCounter())        << std::endl;
             std::cout << "TES relay settings     = " << unsigned(sp->getHeader()->getTESRelaySetting())     << std::endl;
-            std::cout << "External time clock    = " << unsigned(sp->getHeader()->getExternalTimeClock())   << std::endl;
+            std::cout << "External time clock    = " << sp->getHeader()->getExternalTimeClock()             << std::endl;
             std::cout << "Control field          = " << unsigned(sp->getHeader()->getControlField())        << std::endl;
             std::cout << "Test parameters        = " << unsigned(sp->getHeader()->getTestParameters())      << std::endl;
             std::cout << "Number of rows         = " << unsigned(sp->getHeader()->getNumberRows())          << std::endl;
